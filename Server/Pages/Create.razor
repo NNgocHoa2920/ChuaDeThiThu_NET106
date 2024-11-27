@@ -1,0 +1,29 @@
+﻿@page "/create"
+@using Server.Services
+@using global::Share
+@inject ISinhVienService SinhVienService
+@inject NavigationManager NavigationManager
+<h3>Create</h3>
+
+<EditForm Model="sv" OnValidSubmit="SubmitForm">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
+    <div>
+        <label>Name: </label>
+        <InputText @bind-Value="sv.Name"></InputText>
+    </div>
+    <div>
+        <label>Age: </label>
+        <InputNumber @bind-Value="sv.Age"></InputNumber>
+    </div>
+    <button type="submit">Create</button>
+</EditForm>
+
+@code {
+    private SinhVien sv = new SinhVien();
+    private async Task SubmitForm()
+    {
+        await SinhVienService.Create(sv);
+        NavigationManager.NavigateTo("/listsinhvien");
+    }
+}
